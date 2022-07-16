@@ -1,0 +1,44 @@
+.CategorySpendCard {
+    display: grid;
+    grid-template-columns: 80px 2fr 1fr;
+    grid-template-rows: 5px 1fr 1fr 5px;
+    height: 85px;
+}
+
+.iconDetails {
+    margin-left:2%;
+    float:left; 
+    height:80px;
+    width:80px;
+    grid-row-start: 2;
+    grid-row-end: span 2;
+}
+
+.CategorySpendInfo{
+    grid-row-start: 2;
+    grid-column-start: 2;
+    text-align: left;
+    padding-left: 10px;
+    padding-top: 10px;
+    margin: 0;
+}
+
+.CategorySpendAmt{
+    grid-row-start: 3;
+    grid-column-start: 2;
+    text-align: left;
+    padding-left: 10px;
+    margin: 0;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.NoOfSpends{
+    grid-row-start: 2;
+    grid-row-end: span 2;
+    grid-column-start: 3;
+    text-align: center;
+    padding-top: 20%;
+    margin: 0;
+    font-weight: lighter;
+}

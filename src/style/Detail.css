@@ -1,0 +1,45 @@
+.Background {
+    background-color:black;
+    height: 100vh;
+
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    
+    gap: 12px;
+    padding: 12px;
+    box-sizing: border-box;
+    color: white;
+}
+
+.CategoryGraph {
+    background-color:#282828;
+}
+
+.chartcanvas {
+    padding-top: 20px;
+    height:450px;
+    width: 450px;
+    box-sizing: border-box;
+}
+
+.Category{
+    background-color:#282828;
+    grid-row-start: 1;
+    grid-row-end: span 2;
+    grid-column-start: 3;
+}
+
+.Transaction{
+    background-color:#282828;
+    grid-row-start: 1;
+    grid-row-end: span 2;
+    grid-column-start: 4;
+}
+
+.Misc {
+    grid-row-start: 1;
+    grid-row-end: span 2;
+    grid-column-start: 2;
+    background-color:#282828;
+}

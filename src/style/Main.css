@@ -1,0 +1,89 @@
+.Main{
+    background-color:black;
+    height: 100vh;
+
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 12px;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.Main div{
+    /* border: 1px solid white; */
+}
+
+.Month{
+    color: white;
+    margin: 0px;
+    width: 50%;
+    font-weight: bolder;
+    font-size: 40px;
+    padding-left: 2%;
+    text-align: center;
+}
+
+.Spend{
+    text-align: center;
+    padding-top: 1%;
+    color: white;
+    padding-left: 2%;
+    padding-bottom: 1%;
+    font-size: 400%;
+    width: 30%;
+}
+
+.SafeSpend{
+    color: white;
+}
+
+.Budget{
+    background-color:#282828;
+
+    grid-column-start: 1;
+    grid-column-end: span 2;
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.ThisWeek{
+    background-color:#282828;
+
+    grid-column-start: 1;
+    grid-column-end: span 4;
+}
+
+.ThisWeek p {
+    text-align: center;
+    margin: 0;
+    padding-bottom: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.BudgetMsg{
+    color: white;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.barcanvas{
+    width: 100vw;
+    height:400px 
+}
+
+.TopSpend{
+    background-color:#282828;
+    color: white;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.TopCategory {
+    background-color:#282828;
+    color: white;
+    text-align: center;
+    font-weight: bolder;
+}
