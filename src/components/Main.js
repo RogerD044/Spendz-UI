@@ -57,6 +57,14 @@ const Main = () => {
                 </Spinner>
     }
     
+    const uploadDataFile = (event) => {
+        let file = event.target.files[0]
+        const formData = new FormData()
+        formData.append("file",file)
+        formData.append("fileName",file.name)
+        axios.post("http://localhost:8080/insert/upload", formData).then((response) => {console.log(response.data)});
+        window.location.reload(false)
+    }
     
     return (
         <div className="Main">
@@ -91,6 +99,9 @@ const Main = () => {
                         : <span><span>You are good to spend </span> <span style={{color:"greenyellow", fontWeight:"bold"}}>{parseAmount(safeSpendLimit - totalSpend)}</span></span>}
                         <span> of your {parseAmount(safeSpendLimit)} budget</span>
                     </div>
+
+                    <br/><br/><br/>
+                    <input name="File" type="file" onChange={uploadDataFile}/>
                 </div>
             </div>
             
