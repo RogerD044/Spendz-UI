@@ -12,7 +12,7 @@ const CategorySpendCard = (props) => {
     const categoryName = props.info
 
     return (
-        <div className="CategorySpendCard">
+        <div className="CategorySpendCard" onClick={()=>props.categoryClickHandler(categorySpendInfo)}>
             <img src={renderImage(categoryName)} className="iconDetails"></img>
             <p className="CategorySpendInfo">{categorySpendInfo}</p>
             <p className="CategorySpendAmt">{parseAmount(amt)}</p>

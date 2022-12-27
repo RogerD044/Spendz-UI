@@ -27,6 +27,7 @@ const Detail = () => {
     const [filterVisible, setFilterVisible] = useState(false)
     let filter = useSelector((state)=> state.filters)
     const [currCategoryPage, setCurrCategoryPage] = useState(0)
+    const [selectedCategoryId, setSelectedCategoryId] = useState(null)
     
     useEffect(() => {
         fetching();
@@ -68,6 +69,12 @@ const Detail = () => {
 
     const calcPercentage = (num, den) => {
         return Math.round((num/den)*100)
+    }
+
+    const selectCategoryHandler = (event) => {
+        selectedCategoryId === event ?
+            setSelectedCategoryId(null) :
+            setSelectedCategoryId(event)
     }
 
     var dateFlag=false
@@ -158,12 +165,12 @@ const Detail = () => {
                     activeClassName={'active'}
                 />
                 {data.categoryWiseResponseData.slice(currCategoryPage * pageSize,currCategoryPage * pageSize + pageSize).map((item) => {
-                    return <CategorySpendCard key={item.categoryName} amount={item.amount} info={item.categoryName} noOfSpends={item.noOfSpend}/>    
+                    return <CategorySpendCard key={item.categoryName} amount={item.amount} info={item.categoryName} noOfSpends={item.noOfSpend} categoryClickHandler={selectCategoryHandler}/>
                 })}
             </div>
 
             <div className="Transaction">
-                <AllTransaction transactions={transaction.allTransactions}/>
+                <AllTransaction transactions={transaction.allTransactions} selectedCategory={selectedCategoryId}/>
             </div>
 
             <div className="CategoryGraph">

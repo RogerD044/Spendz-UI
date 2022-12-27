@@ -3,32 +3,44 @@ import ReactPaginate from 'react-paginate';
 import SpendCard from "./SpendCard";
 import { useSelector } from "react-redux";
 import Button from "@mui/material/Button"
+import ReactSearchBox from "react-search-box";
 
-const AllTransaction = () => {
+
+const AllTransaction = (props) => {
     let transactions = useSelector((state) => state.detailPageData.data.allTransactions);
-    const[props, setProps] = useState(null)
+    const[properties, setProperties] = useState(null)
     const pageSize = 9;
     const [totalTransactions, setTotalTransactions] = useState(0)
     const [currentTransactions, setCurrentTransactions] = useState(null)
     const [currentPage, setCurrentPage] = useState(0)
     const [amtOrderByAsc, setAmtOrderByAsc] = useState(false)
     const [dateOrderByAsc, setDateOrderByAsc] = useState(false)
+    const [searchText, setSearchText] = useState(null)
     
     // -1 : DESC , 0 : No order(Default), 1: ASC
     const [orderByAmountState, setOrderByAmountState] = useState(0)
     const [orderByDateState, setOrderByDateState] = useState(-1)
 
     useEffect(() => {
-        setProps(transactions)
-        setCurrentTransactions(getCurrentTransactions(currentPage))
-        setTotalTransactions(transactions.length)
+        setProperties(transactions)
+        var filteredTransactions = filterTransactions()
+        setCurrentTransactions(getCurrentTransactions(currentPage,filteredTransactions))
+        setTotalTransactions(filteredTransactions.length)
         sortByDateImplementation(orderByDateState)
         sortByAmountImplementation(orderByAmountState)
-    }, [transactions]);
+    }, [transactions, props.selectedCategory]);
+    
+    function filterTransactions() {
+
+        return props.selectedCategory === null ?
+            transactions :
+            transactions.filter(item => item.category.category === props.selectedCategory)
+    }
 
     function getCurrentTransactions(currPage) {
         let start = currPage * pageSize
-        return transactions.slice(start,start+pageSize)
+        var filteredTransactions = filterTransactions()
+        return filteredTransactions.slice(start,start+pageSize)
     }
 
     const onPaginationClick = (data) => {
@@ -101,6 +113,16 @@ const AllTransaction = () => {
         setOrderByDateState(0)
     }
 
+    const searchBarHandler = (event) => {
+        setSearchText(event.target.value)
+    }
+
+    const searchTransactionHandler = () => {
+        var currTransactions = currentTransactions.filter(item => (item.displayInfo.toLowerCase().includes(searchText.toLowerCase())
+            || item.rawDesc.toLowerCase().includes(searchText.toLowerCase())))
+        setCurrentTransactions(currTransactions)
+    }
+
     // const sortByAmountHandler = () => {
     //     if(amtOrderByAsc)
     //         transactions = transactions.sort((a,b) => {
@@ -116,7 +138,7 @@ const AllTransaction = () => {
     //     setAmtOrderByAsc(!amtOrderByAsc)
     // }
     
-    if(props==null || currentTransactions==null) {
+    if(properties==null || currentTransactions==null) {
         return <div>LOADING .......</div>
     }
 
@@ -126,7 +148,10 @@ const AllTransaction = () => {
                     <span>{transactions.length}</span>
                     <span> Transactions</span>
                     <span> ({transactions.filter(item => !item.excludeFromExpense).length} active)</span>
-                </p>
+            </p>
+            
+            <input style={{textAlign:"center"}} type="text" placeholder="Search" value={searchText} onChange={searchBarHandler} />
+            <Button size="small" variant="outlined" color="success" onClick={searchTransactionHandler}> Search </Button>
             <ReactPaginate 
                 previousLabel={'Prev'}
                 nextLabel={'Next'}
