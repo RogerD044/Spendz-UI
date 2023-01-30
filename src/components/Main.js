@@ -61,8 +61,10 @@ const Main = () => {
         let file = event.target.files[0]
         const formData = new FormData()
         formData.append("file",file)
-        formData.append("fileName",file.name)
-        axios.post("http://localhost:8080/insert/upload", formData).then((response) => {console.log(response.data)});
+        formData.append("fileName", file.name)
+        console.log("UPLOADING")
+        axios.post("http://localhost:8080/insert/upload", formData).then((response) => { console.log(response.data) });
+        console.log("UPLOADED")
         window.location.reload(false)
     }
     
