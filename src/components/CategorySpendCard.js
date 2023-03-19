@@ -15,7 +15,7 @@ const CategorySpendCard = (props) => {
         <div className="CategorySpendCard" onClick={()=>props.categoryClickHandler(categorySpendInfo)}>
             <img src={renderImage(categoryName)} className="iconDetails"></img>
             <p className="CategorySpendInfo">{categorySpendInfo}</p>
-            <p className="CategorySpendAmt">{parseAmount(amt)}</p>
+            {amt<0 ? <p className="CategorySpendAmtCredit">{parseAmount(Math.abs(amt))}</p> : <p className="CategorySpendAmt">{parseAmount(amt)}</p>}
             <p className="NoOfSpends">{noSpends} Spend(s)</p>
         </div>
     )

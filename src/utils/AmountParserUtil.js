@@ -1,7 +1,9 @@
 const rupeeSign = '\u20B9';
 
 const parseAmount=(amt)=>{
-    amt = Math.round(amt)
+    var actualAmtWithSign = Math.round(amt)
+    amt = Math.abs(actualAmtWithSign)
+    var amountSign = (actualAmtWithSign>0) ? '' :'-' 
     var parsedAmt = ''
     var count = 0
     while(amt!=0) {
@@ -14,8 +16,8 @@ const parseAmount=(amt)=>{
         if(count%2==1 && count!=1 && amt!=0)
             parsedAmt = ',' + parsedAmt
     }
-
-    parsedAmt = rupeeSign + parsedAmt
+    
+    parsedAmt = rupeeSign + amountSign + parsedAmt
     return parsedAmt
 }
 

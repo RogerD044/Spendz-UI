@@ -3,12 +3,9 @@ import {Doughnut} from 'react-chartjs-2'
 
 const CategoryGraph = (props) => {
     const categories = props.categories
-    const categoryData = categories.map(item=>item.amount)
-    const categoryLabel = categories.map(item=>item.categoryName)
-    const categoryColors = categories.map(item=>"rgb"+item.color)
-    console.log(categoryData)
-    console.log(categoryLabel)
-    console.log(categoryColors)
+    const categoryData = categories.filter(item=>item.amount>0).map(item=>item.amount)
+    const categoryLabel = categories.filter(item=>item.amount>0).map(item=>item.categoryName)
+    const categoryColors = categories.filter(item=>item.amount>0).map(item=>"rgb"+item.color)
     const data = {
         labels: categoryLabel,
         datasets: [{

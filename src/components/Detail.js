@@ -104,32 +104,26 @@ const Detail = () => {
             <div className="CategoryGraph">
                 <CategoryGraph categories={data.categoryWiseResponseData}/>
             </div>
-            {console.log(filter)}
             <div className="Misc">
                 {filterVisible ? <DetailFilterModal visibility={filterVisible} setVisibility={setFilterVisible}/> : null}
                 <Button style={buttonStyle} size="small" variant="outlined" onClick={homeHandler}>Home</Button>
                 <Button style={buttonStyle} size="large" variant="outlined" onClick={toggleFilter}>Filter</Button>
                 <Button style={buttonStyle} size="large" variant="outlined" onClick={trendsPageHandler}>Trends</Button>
                 
-                {/* {dateFlag ? (
-                    <p style={{paddingTop:60, textAlign:"center", fontSize:80, paddingBottom:50}}>{month}</p>    
-                ) : (
-                    <><p style={{paddingTop:20,margin:0, textAlign:"center", fontSize: 50 }}>{new Date(filter.startDate).toDateString()}</p><p style={{margin:0, textAlign:"center",fontSize: 50 }}>to</p><p style={{margin:0, textAlign:"center",fontSize: 50 }}>{new Date(filter.endDate).toDateString()}</p></>
-                )} */}
                 {console.log(data)}
                 <Card style={{marginLeft:30, marginTop:40, backgroundColor:'rgba(54, 162, 235, 0.15)', width:360, height:175, color:'white', borderColor:'rgb(54, 162, 235)'}}>
-                    <p style={{textAlign:"center", fontSize:20, marginDown:0}}>Total Spend</p>
+                    <p style={{ textAlign: "center", fontSize: 20, marginDown: 0 }}>Total Spend ({data.totalSpendPercentOfSalary}% of Salary)</p>
                     <p style={{paddingTop:10,margin:0,paddingBottom:20, fontSize:70, textAlign:"center"}}>{parseAmount(data.totalSpend)}</p>
                 </Card>
 
                 <Card style={{marginLeft:30, marginTop:20, backgroundColor:'rgba(255, 138, 101, 0.15)', width:360, height:175, color:'white', borderColor:'rgb(54, 162, 235)'}}>
-                    <p style={{textAlign:"center", fontSize:20, marginDown:0}}>Net Spend ({calcPercentage(data.totalSpend - data.miscIncome - data.investment, data.totalIncome - data.miscIncome)}%)</p>
-                    <p style={{paddingTop:10,margin:0,paddingBottom:20, fontSize:70, textAlign:"center"}}>{parseAmount(data.totalSpend - data.miscIncome - data.investment)}</p>
+                    <p style={{ textAlign: "center", fontSize: 20, marginDown: 0 }}>Net Spend ({data.netSpendPercentOfSalary}%)</p>
+                    <p style={{paddingTop:10,margin:0,paddingBottom:20, fontSize:70, textAlign:"center"}}>{parseAmount(data.netSpend)}</p>
                 </Card>
 
                 <Card style={{marginLeft:30, marginTop:20, backgroundColor:'rgba(188, 108, 202, 0.15)', width:360, height:175, color:'white', borderColor:'rgb(75, 192, 192)'}}>
-                    <p style={{textAlign:"center", fontSize:20, marginDown:0}}>Saving & Investment ({calcPercentage(data.investment + (data.totalIncome-data.totalSpend), data.totalIncome - data.miscIncome)}%)</p>
-                    <p style={{paddingTop:10,margin:0,paddingBottom:20, fontSize:70, textAlign:"center"}}>{parseAmount(data.investment + (data.totalIncome-data.totalSpend))}</p>
+                    <p style={{ textAlign: "center", fontSize: 20, marginDown: 0 }}>Saving & Investment ({data.totalSavingPercentOfSalary}%)</p>
+                    <p style={{paddingTop:10,margin:0,paddingBottom:20, fontSize:70, textAlign:"center"}}>{parseAmount(data.savingAndInvestment)}</p>
                 </Card>
 
                 <Card style={{marginLeft:30, marginTop:20, backgroundColor:'rgba(75, 192, 192, 0.15)', width:360, height:175, color:'white', borderColor:'rgb(75, 192, 192)'}}>
@@ -181,7 +175,7 @@ const Detail = () => {
                 )}
                 <br/>
                 <ul style={{textAlign:"center"}}>
-                    {data.categoryWiseResponseData.sort((a,b)=> (a.percentile < b.percentile ? 1 : -1)).map(item=> <li key={item.categoryName}>{item.categoryName} - {item.percentile.toFixed(1)}</li>)}
+                    {data.categoryWiseResponseData.sort((a,b)=> (a.percentile < b.percentile ? 1 : -1)).filter(item=>item.amount>0).map(item=> <li key={item.categoryName}>{item.categoryName} - {item.percentile.toFixed(1)}</li>)}
                 </ul>
             </div>
         </div>
