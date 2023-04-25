@@ -10,6 +10,7 @@ import bills from "../assets/Bills.png"
 import grocery from "../assets/Grocery.png"
 import health from "../assets/Health.png"
 import salary from "../assets/Salary.png"
+import returns from "../assets/Returns.png"
 
 
 const renderImage = (category) => {
@@ -25,7 +26,8 @@ const renderImage = (category) => {
         case("Bills") : return bills
         case("Grocery") : return grocery
         case("Health") : return health
-        case("Salary") : return salary
+        case ("Salary"): return salary
+        case("Returns") : return returns
         default : return uncategorized
     }
 }
