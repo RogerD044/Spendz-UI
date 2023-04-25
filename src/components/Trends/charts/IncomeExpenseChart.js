@@ -42,10 +42,10 @@ const IncomeExpenseChart = (props) => {
                 <Tooltip />
                 <Legend />
                 {((props.option==="NET" || props.option==="TOTAL") && visibility!=="EXP") ? <Bar dataKey="Income" fill="#82ca9d" /> : null}
-                {((props.option==="NET" || props.option==="TOTAL") && visibility!=="INC") ? <Bar dataKey="Expense" fill="#8884d8"/> : null}
+                {((props.option==="NET" || props.option==="TOTAL") && visibility!=="INC") ? <Bar dataKey="Expense" fill="#df7f7d"/> : null}
                 {(props.option==="SAVING") ? <Bar dataKey="Saving" fill="#FF6347"/> : null}
                 
-                {((props.option==="NET" || props.option==="TOTAL") && visibility!=="INC") ? <ReferenceLine y={avgExp} label="Avergae Expense" stroke="red" strokeDasharray="3 3" /> : null}
+                {((props.option==="NET" || props.option==="TOTAL") && visibility!=="INC") ? <ReferenceLine y={avgExp} label="Avergae Expense" stroke="black" strokeDasharray="3 3" /> : null}
                 {(props.option==="SAVING") ? <ReferenceLine y={avgSav} label="Avergae Saving" stroke="red" strokeDasharray="3 3" /> : null}
             </BarChart>
         </div>

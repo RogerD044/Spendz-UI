@@ -1,5 +1,5 @@
 import React, {useState } from "react"
-import { LineChart,Tooltip, Legend,Line,CartesianGrid,XAxis, YAxis, BarChart, Bar } from "recharts"
+import { LineChart,Tooltip, Legend,Line,CartesianGrid,XAxis, YAxis, BarChart, Bar,ReferenceLine } from "recharts"
 import { Button } from "react-bootstrap";
 import parseAmount from '../../../utils/AmountParserUtil'
 
@@ -17,18 +17,21 @@ const mapToData = (data) => {
      return obj
 }
 
-const mapToDataCummulative = (data,series) => {
-    console.log(series)
+const mapToDataCummulative = (data,selectedCategories) => {
+    console.log(selectedCategories)
+    console.log(data)
     const obj = []
     for(var i = 0; i < data.length;i++){
         var categorySpend = data[i].categorySpend
-        let dataPt = {total:data[i].totalAmount, name:data[i].label}
-        for(const k in categorySpend){
-          dataPt[k] = categorySpend[k]
+        console.log(categorySpend)
+        let dataPt = {total:0, name:data[i].label}
+        for (const k in categorySpend) {
+            if(selectedCategories.includes(k))
+                dataPt['total'] += categorySpend[k]
         }
         obj.push(dataPt)
      }
-
+     console.log(obj)
      return obj
 }
 
@@ -76,17 +79,19 @@ const CategoryExpenseLineChart = (props) => {
                     <Tooltip />
                     <Legend />
                     {series.map(it=> (<Line type="monotone" dataKey={it.substring(0,it.indexOf('#'))} stroke={'rgb' + it.substring(it.indexOf('#')+1)} strokeWidth={5} dot={{r:7}}/>) )}
+                    <ReferenceLine y={totalExp} label={totalExp} stroke="red" strokeWidth={3} strokeDasharray="3 3" />
                 </LineChart>
         }
         else if(figType==="LINE" && figType2==="TOT") {
-            return <LineChart width={1700} height={820} data={mapToDataCummulative(props.data.categoryTrendResponse,series)}
+            return <LineChart width={1700} height={820} data={mapToDataCummulative(props.data.categoryTrendResponse,props.selectedCategories)}
                         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="name" />
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        {series.map(it=> (<Line type="monotone" dataKey={it.substring(0,it.indexOf('#'))} stroke={'rgb' + it.substring(it.indexOf('#')+1)} strokeWidth={5} dot={{r:7}}/>) )}
+                        <Line type="monotone" dataKey="total" stroke="orange" strokeWidth={5} dot={{r:7}} />
+                        <ReferenceLine y={totalExp} label={totalExp} stroke="red" strokeWidth={3} strokeDasharray="3 3" />
                     </LineChart>
         } 
         else if(figType==="BAR" && figType2==="CAT") {
@@ -97,17 +102,19 @@ const CategoryExpenseLineChart = (props) => {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        {series.map(it=> (<Bar stackId="a" dataKey={it.substring(0,it.indexOf('#'))} fill={'rgb' + it.substring(it.indexOf('#')+1)} />) )}
+                        {series.map(it => (<Bar stackId="a" dataKey={it.substring(0, it.indexOf('#'))} fill={'rgb' + it.substring(it.indexOf('#') + 1)} />))}
+                        <ReferenceLine y={totalExp} label={totalExp} stroke="red" strokeWidth={3} strokeDasharray="3 3" />
                     </BarChart>
         }
         else {
-            return <BarChart width={1700} height={820} data={mapToDataCummulative(props.data.categoryTrendResponse,series)}>
+            return <BarChart width={1700} height={820} data={mapToDataCummulative(props.data.categoryTrendResponse,props.selectedCategories)}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="name" />
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="Balance" fill="#82ca9d" />
+                        <Bar dataKey="total" fill="orange" />
+                        <ReferenceLine y={totalExp} label={totalExp} stroke="red" strokeWidth={3} strokeDasharray="3 3" />
                     </BarChart>
         }
     }
